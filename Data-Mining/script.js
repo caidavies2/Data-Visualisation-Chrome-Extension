@@ -1,20 +1,11 @@
-// Individual page load
+// Stick stuff in here for loading after an individual page
 
-// chrome.extension.sendMessage({text:"getStuff"},function(reponse){
-//   //This is where the stuff you want from the background page will be
-//     // console.log(response);
-// });
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    console.log(request.greeting);
-    if (request.greeting == "hello")
-      sendResponse({farewell: "goodbye"});
-  });
 
 var host = window.location.host;
 var url = window.location.href;
 var hash = window.location.hash;
+var tweeted = false;
 
 var client = new Messaging.Client("box.bento.is", 8080, "myclientid_" + parseInt(Math.random() * 100, 10));
 
@@ -26,7 +17,7 @@ var options = {
   //Gets Called if the connection has successfully been established
   onSuccess: function () {
     console.log("Connected");
-    client.subscribe("301/cai", {qos: 0});
+    client.subscribe("saligia/arduino-wrath", {qos: 0});
     checkHost(host);
   },
 
@@ -95,7 +86,7 @@ function facebookRun()
     console.log(i);
 
     if( i == 60 ){
-      publish('facebook:one minute','301/cai', 0);
+      publish('facebook:one minute','saligia/arduino-wrath', 0);
       i = 0;
     }
   },1000);
@@ -103,25 +94,24 @@ function facebookRun()
 
 function youtubeRun()
 {
-  console.log('hello youtube');
   var watchcount = $( "span.watch-view-count" ).html();
-  publish(watchcount,'301/cai', 0);
+  publish(watchcount,'saligia/arduino-wrath', 0);
 }
 
 function googleRun(){
   window.onhashchange = function(){
-    publish('google:one search','301/cai', 0);
+    publish('google:one search','saligia/arduino-wrath', 0);
   }
 }
 
 function yahooRun()
 {
-  publish('yahoo:one search','301/cai', 0);
+  publish('yahoo:one search','saligia/arduino-wrath', 0);
 }
 
 function wikipediaRun()
 {
-  publish('wikipedia:one page','301/cai', 0);
+  publish('wikipedia:one page','saligia/arduino-wrath', 0);
 }
 
 function linkedinRun()
@@ -132,7 +122,7 @@ function linkedinRun()
     console.log(u);
 
     if( u == 60 ){
-      publish('linkedin:one minute','301/cai', 0);
+      publish('linkedin:one minute','saligia/arduino-wrath', 0);
       u = 0;
     }
   },1000);
@@ -140,7 +130,18 @@ function linkedinRun()
 
 function twitterRun()
 {
+
+  if(!tweeted)
+  {
+      // if($(".tweet-form").hasClass("tweeting")){
+      //   console.log("Tweeting");
+      //   tweeted = !tweeted;
+      //   console.log(tweeted);
+      //   // break;
+      // }
+
       $('.primary-btn').click(function(){
-        publish('tweeted','301/cai', 0);
+        publish('tweeted','saligia/arduino-wrath', 0);
       });
+}
 }
