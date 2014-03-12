@@ -8,5 +8,8 @@ void setup() {
  
  
 void loop() {                               
-    myservo.write(180);
+    myservo.write(0);
 } 
+
+
+
