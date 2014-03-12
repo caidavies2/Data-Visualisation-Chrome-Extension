@@ -1,12 +1,17 @@
 // Stick stuff in here for loading after an individual page
+var mapSocket = new WebSocket("ws://box.bento.is:8080/cai");
 
-
+mapSocket.onmessage = function (event) {
+  payload = JSON.parse(event.data);
+  console.log(payload);
+  //parse the payload and update a map
+};
 
 var host = window.location.host;
 var url = window.location.href;
 var hash = window.location.hash;
+var url, previousURL;
 var tweeted = false;
-
 var client = new Messaging.Client("box.bento.is", 8080, "myclientid_" + parseInt(Math.random() * 100, 10));
 
 var options = {
@@ -17,8 +22,10 @@ var options = {
   //Gets Called if the connection has successfully been established
   onSuccess: function () {
     console.log("Connected");
-    client.subscribe("saligia/arduino-wrath", {qos: 0});
-    checkHost(host);
+    client.subscribe("cai", {qos: 0});
+      url = host;
+      checkHost(host, url);
+      previousURL = url;
   },
 
   //Gets Called if the connection could not be established
@@ -38,10 +45,19 @@ var publish = function (payload, topic, qos) {
   client.send(message);
 }
 
-function checkHost(hostCheck)
+function checkHost(hostCheck, urlCheck)
 {
 
   console.log('checking host');
+
+  if(hostCheck == "www.google.co.uk")
+  {
+    googleRun();
+  }
+  else if(urlCheck.indexOf("search?q=") != -1)
+  {
+    googleRun();
+  }
 
   switch (hostCheck)
   {
@@ -55,10 +71,6 @@ function checkHost(hostCheck)
     youtubeRun();
     break;
 
-  case "www.google.co.uk":
-    googleRun();
-    break;
-
   case "uk.search.yahoo.com":
     yahooRun();
     break;
@@ -68,6 +80,7 @@ function checkHost(hostCheck)
     break;
 
   case "uk.linkedin.com":
+  case "www.linkedin.com":
     linkedinRun();
     break;
 
@@ -75,6 +88,10 @@ function checkHost(hostCheck)
     twitterRun();
     break;
   }
+
+
+
+
 
 }
 
@@ -86,7 +103,7 @@ function facebookRun()
     console.log(i);
 
     if( i == 60 ){
-      publish('facebook:one minute','saligia/arduino-wrath', 0);
+      publish('0.54','cai', 0);
       i = 0;
     }
   },1000);
@@ -94,24 +111,23 @@ function facebookRun()
 
 function youtubeRun()
 {
-  var watchcount = $( "span.watch-view-count" ).html();
-  publish(watchcount,'saligia/arduino-wrath', 0);
+  publish("9.45",'cai', 0);
 }
 
 function googleRun(){
-  window.onhashchange = function(){
-    publish('google:one search','saligia/arduino-wrath', 0);
-  }
+  // window.onhashchange = function(){
+    publish("7",'cai', 0);
+  // }
 }
 
 function yahooRun()
 {
-  publish('yahoo:one search','saligia/arduino-wrath', 0);
+  publish("1.27",'cai', 0);
 }
 
 function wikipediaRun()
 {
-  publish('wikipedia:one page','saligia/arduino-wrath', 0);
+  publish("0.024",'cai', 0);
 }
 
 function linkedinRun()
@@ -122,7 +138,7 @@ function linkedinRun()
     console.log(u);
 
     if( u == 60 ){
-      publish('linkedin:one minute','saligia/arduino-wrath', 0);
+      publish("0.16",'cai', 0);
       u = 0;
     }
   },1000);
@@ -133,15 +149,8 @@ function twitterRun()
 
   if(!tweeted)
   {
-      // if($(".tweet-form").hasClass("tweeting")){
-      //   console.log("Tweeting");
-      //   tweeted = !tweeted;
-      //   console.log(tweeted);
-      //   // break;
-      // }
-
       $('.primary-btn').click(function(){
-        publish('tweeted','saligia/arduino-wrath', 0);
+        publish("0.02",'cai', 0);
       });
 }
 }
