@@ -1,12 +1,4 @@
 // Stick stuff in here for loading after an individual page
-var mapSocket = new WebSocket("ws://box.bento.is:8080/cai");
-
-mapSocket.onmessage = function (event) {
-  payload = JSON.parse(event.data);
-  console.log(payload);
-  //parse the payload and update a map
-};
-
 var host = window.location.host;
 var url = window.location.href;
 var hash = window.location.hash;
