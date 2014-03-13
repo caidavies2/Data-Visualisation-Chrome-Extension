@@ -27,9 +27,9 @@ var options = {
 client.connect(options);
 
 
-  client.onMessageArrived = function (message) {
-    updateLeaderboard(message.destinationName, message.payloadString);
-  }
+client.onMessageArrived = function (message) {
+  updateLeaderboard(message.destinationName, message.payloadString);
+}
 
 
 // Set Badge Icon
@@ -38,9 +38,9 @@ chrome.browserAction.setBadgeBackgroundColor({color: "#000"});
 var i = 1;
 
 setInterval(function(){
-    i = i.toString();
-    updateBadge(i);
-    i++
+  i = i.toString();
+  updateBadge(i);
+  i++
 }, 1000);
 
 function updateBadge(nOnline)
@@ -48,35 +48,29 @@ function updateBadge(nOnline)
   chrome.browserAction.setBadgeText({text: nOnline});
 }
 
-//example of using a message handler from the inject scripts
-chrome.extension.onMessage.addListener(
-  function(request, sender, sendResponse) {
-  	chrome.pageAction.show(sender.tab.id);
-    sendResponse();
-  });
+  //   Functions
+  function updateLeaderboard(topic, score)
+  {
+    switch (topic)
+    {
 
-//   Functions
-function updateLeaderboard(topic, score)
-{
-   switch (topic)
-   {
+      case "cai-score":
+      $('#cai .score').text(score);
+      chrome.runtime.sendMessage({player: 'cai', greeting: score});
+      console.log('hello');
+      break;
 
-     case "cai-score":
-     $('#cai .score').text(score);
-     console.log(score);
-     break;
+    case "chris-score":
+      $('#chris .score').text(score);
+      chrome.runtime.sendMessage({greeting: score});
+      break;
 
-     case "chris-score":
-     $('#chris .score').text(score);
-     console.log('score logged');
-     break;
+    case "aaron-score":
+      $('#aaron .score').text(score);
+      chrome.runtime.sendMessage({greeting: score});
+      break;
 
-     case "aaron-score":
-     $('#aaron .score').text(score);
-     console.log('score logged');
-     break;
-
-     default:
-       return false;
-   }
-}
+    default:
+      return false;
+    }
+  }
