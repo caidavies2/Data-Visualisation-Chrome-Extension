@@ -1,5 +1,6 @@
 
 // MQTT for leaderboard
+var caiScoreTally,aaronScoreTally,chrisScoreTally
 
 var client = new Messaging.Client("box.bento.is", 8080, "myclientid_" + parseInt(Math.random() * 100, 10));
 
@@ -11,9 +12,9 @@ var options = {
   //Gets Called if the connection has successfully been established
   onSuccess: function () {
     console.log("Connected");
-    client.subscribe("cai-score");
-    client.subscribe("chris-score");
-    client.subscribe("aaron-score");
+    client.subscribe("cai_final_score");
+    client.subscribe("evans_final_score");
+    client.subscribe("aaron_final_score");
   },
 
 
@@ -45,7 +46,7 @@ setInterval(function(){
 
 function updateBadge(nOnline)
 {
-  chrome.browserAction.setBadgeText({text: nOnline});
+  // chrome.browserAction.setBadgeText({text: nOnline});
 }
 
   //   Functions
@@ -53,20 +54,17 @@ function updateBadge(nOnline)
   {
     switch (topic)
     {
-
-      case "cai-score":
-      $('#cai .score').text(score);
-      chrome.runtime.sendMessage({player: 'cai', greeting: score});
-      console.log('hello');
+    case "cai_final_score":
+      // chrome.runtime.sendMessage({player: 'cai', greeting: score});
+      caiScoreTally = score;
+      console.log(score);
       break;
 
-    case "chris-score":
-      $('#chris .score').text(score);
+    case "evans_final_score":
       chrome.runtime.sendMessage({greeting: score});
       break;
 
-    case "aaron-score":
-      $('#aaron .score').text(score);
+    case "aaron_final_score":
       chrome.runtime.sendMessage({greeting: score});
       break;
 

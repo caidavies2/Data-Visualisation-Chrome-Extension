@@ -33,7 +33,8 @@
   "permissions": [
     "notifications",
     "tabs",
-    "http://*/*"
+    "http://*/*",
+    "storage"
   ],
   "content_scripts": [
     {
