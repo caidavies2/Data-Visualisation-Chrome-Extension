@@ -12,16 +12,17 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "src/bg/background.js",
-      "src/browser_action/css/main.css"
+      "js/mqttws31.js",
+      "js/jquery.min.js",
+      "src/bg/background.js"
     ],
     "persistent": true
   },
 
     "web_accessible_resources": [
-    "script.js",
-    "jquery-1.9.1.min.js",
-    "jquery.min.map"
+    "js/jquery-1.9.1.min.js",
+    "js/jquery.min.map",
+    "js/mqttws31.js"
   ],
 
   "browser_action": {
@@ -41,9 +42,9 @@
         "https://*/*"
       ],
       "js": [
+        "js/mqttws31.js",
         "src/inject/inject.js",
-        "js/jquery.min.js",
-        "js/mqttws31.js"
+        "js/jquery.min.js"
       ]
     }
   ]
