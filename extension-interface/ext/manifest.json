@@ -17,6 +17,13 @@
     ],
     "persistent": true
   },
+
+    "web_accessible_resources": [
+    "script.js",
+    "jquery-1.9.1.min.js",
+    "jquery.min.map"
+  ],
+
   "browser_action": {
     "default_icon": "icons/icon19.png",
     "default_title": "browser action demo",
@@ -30,10 +37,13 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.google.com/*"
+        "http://*/*",
+        "https://*/*"
       ],
       "js": [
-        "src/inject/inject.js"
+        "src/inject/inject.js",
+        "js/jquery.min.js",
+        "js/mqttws31.js"
       ]
     }
   ]
