@@ -8,9 +8,13 @@ console.log(background);
 }, 2000);
 
 $(document).ready(function(){
-    background = chrome.extension.getBackgroundPage().caiScoreTally;
+    backgroundCai = chrome.extension.getBackgroundPage().caiScoreTally;
+    backgroundChris = chrome.extension.getBackgroundPage().chrisScoreTally;
+    backgroundAaron = chrome.extension.getBackgroundPage().aaronScoreTally;
     console.log(background);
-    $('#cai .score').text(background);
+    $('#cai .score').text(backgroundCai);
+    $('#chris .score').text(backgroundChris);
+    $('#aaron .score').text(backgroundAaron);
 
 });
 

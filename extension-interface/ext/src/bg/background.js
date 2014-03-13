@@ -61,11 +61,11 @@ function updateBadge(nOnline)
       break;
 
     case "evans_final_score":
-      chrome.runtime.sendMessage({greeting: score});
+      chrisScoreTally = score;
       break;
 
     case "aaron_final_score":
-      chrome.runtime.sendMessage({greeting: score});
+      aaronScoreTally = score;
       break;
 
     default:
