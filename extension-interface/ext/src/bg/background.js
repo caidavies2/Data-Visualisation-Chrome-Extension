@@ -55,9 +55,8 @@ function updateBadge(nOnline)
     switch (topic)
     {
     case "cai_final_score":
-      // chrome.runtime.sendMessage({player: 'cai', greeting: score});
+
       caiScoreTally = score;
-      console.log(score);
       break;
 
     case "evans_final_score":
