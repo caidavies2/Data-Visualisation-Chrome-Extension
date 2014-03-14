@@ -46,7 +46,7 @@ $(document).ready(function(){
     chrisID.setAttribute('data-score', backgroundChris)
 
     $('#aaron .score').text(backgroundAaron);
-    aaronID.setAttribute('data-score', backgroundCai)
+    aaronID.setAttribute('data-score', backgroundAaron)
 
     // Sort
     $('ul li').tsort({attr:'data-score'});
@@ -54,10 +54,10 @@ $(document).ready(function(){
     $('ul li:first-child span').attr('id', 'leader');
 
     // set badges
-    for(var i=0; i>= 2; i++)
+    for(var i=1; i< 4; i++)
     {
       $('ul li:nth-child(' + i + ') .ranking').text(i);
-      i++;
+      console.log(i);
     }
 
 });
