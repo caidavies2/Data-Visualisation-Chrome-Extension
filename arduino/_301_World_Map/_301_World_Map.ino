@@ -6,11 +6,11 @@
 
 EthernetClient ethClient;
 
-byte mac[] = { 0xC4, 0x2C, 0x03, 0x04, 0x96, 0xDE };
+byte mac[] = { 0xC4, 0x2C, 0x03, 0x04, 0x96, 0xC6 };
 
 char server[] = "box.bento.is";
 int port = 80;
-char subscribedChannel[] = "301/chris-servo";
+char subscribedChannel[] = "chris-arduino";
 char deviceName[] = "chris301";
 
 Servo myservo; 
@@ -40,7 +40,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     convertPayload(payload, length);
     Serial.println(payloadString);
     if(payloadString == "servoOn"){
-      myservo.write(0);
+      myservo.write(180);
       delay(5000);
     } 
   }
@@ -53,7 +53,7 @@ void connectToBroker(){
   if (client.connect(deviceName)) {
     Serial.println("Connecting");
     //send a test message
-    client.publish("301/chris-servo","Chris Servo Ready");
+    client.publish(subscribedChannel,"Chris Servo Ready");
     //subscribe to a channel
     client.subscribe(subscribedChannel);
     Serial.println("Connected");
@@ -66,8 +66,8 @@ void connectToBroker(){
 
 void setup() { 
   Serial.begin(9600);
-  Serial.println("Hello World");
-  myservo.attach(2); 
+  Serial.println("Starting - testing MAC adress...");
+  myservo.attach(2);  // 2 for Uno | 22 for Mega
   if (Ethernet.begin(mac) == 0) {
     Serial.println("Failed to configure Ethernet using DHCP");
     // no point in carrying on, so do nothing forevermore:
@@ -77,8 +77,9 @@ void setup() {
 } 
 
 
+
 void loop() {                               
-  myservo.write(180);
+  myservo.write(0);
   checkBroker();
   delay(1000);
 } 
