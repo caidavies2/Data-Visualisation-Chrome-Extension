@@ -17,7 +17,6 @@ var options = {
     client.subscribe("aaron_final_score");
   },
 
-
   //Gets Called if the connection could not be established
   onFailure: function (message) {
     console.log("Connection failed: " + message.errorMessage);

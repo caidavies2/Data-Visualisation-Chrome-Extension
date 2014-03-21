@@ -1,5 +1,3 @@
-// console.log(background);
-// background.transfer;
 /*! TinySort 1.5.6
 * Copyright (c) 2008-2013 Ron Valstar http://tinysort.sjeiti.com/
 * License:
@@ -10,7 +8,6 @@
 
 
 $(document).ready(function(){
-
     backgroundCai = chrome.extension.getBackgroundPage().caiScoreTally;
     backgroundChris = chrome.extension.getBackgroundPage().chrisScoreTally;
     backgroundAaron = chrome.extension.getBackgroundPage().aaronScoreTally;
@@ -33,7 +30,6 @@ $(document).ready(function(){
       backgroundAaron = "0";
       $('#aaron .score').text("--");
     }
-
 
     backgroundCai = parseFloat(backgroundCai.substr(0,7));
     backgroundChris = parseFloat(backgroundChris.substr(0,7));
@@ -59,17 +55,9 @@ $(document).ready(function(){
       $('ul li:nth-child(' + i + ') .ranking').text(i);
       console.log(i);
     }
-
 });
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     console.log("score: " + message.greeting);
     console.log("player: " + message.player);
-    //
-    // switch (message.player)
-    // {
-    // case "cai":
-    //   $('#cai .score').text(message.greeting);
-    //   break;
-    // }
 });
