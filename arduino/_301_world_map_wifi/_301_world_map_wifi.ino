@@ -2,11 +2,8 @@
 #include <SoftwareSerial.h>
 #include <PubSubClient.h>
 #include <SPI.h>
-#include <Ethernet.h>
+#include <WiFly.h>
 
-EthernetClient ethClient;
-
-byte mac[] = { 0x90, 0xA3, 0xDA, 0x0E, 0xFC, 0x36 };
 
 char server[] = "box.bento.is";
 int port = 80;
@@ -46,7 +43,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
 }
 
-PubSubClient client(server, port, callback, ethClient);
+WiFlyClient wifiClient;
+PubSubClient client(server, port, callback, wifiClient);
 
 void connectToBroker(){
   //connect to the broker
@@ -66,14 +64,18 @@ void connectToBroker(){
 
 void setup() { 
   Serial.begin(9600);
-  Serial.println("Starting - testing MAC adress...");
+  Serial.println("Starting...");
   myservo.attach(2);  // 2 for Uno | 22 for Mega
-  if (Ethernet.begin(mac) == 0) {
-    Serial.println("Failed to configure Ethernet using DHCP");
-    // no point in carrying on, so do nothing forevermore:
-    for(;;)
-      ;
-  } 
+  WiFly.begin();
+  if (!WiFly.join("cai", "cai123456")) {
+      Serial.println("Association failed.");
+      while (1) {
+        // Hang on failure.
+       }
+   } else {
+      Serial.println("Joining");
+      Serial.println(WiFly.ip());
+   }
 }
 
 
