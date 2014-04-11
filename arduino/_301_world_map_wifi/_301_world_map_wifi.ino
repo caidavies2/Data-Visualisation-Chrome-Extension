@@ -8,7 +8,11 @@
 char server[] = "box.bento.is";
 int port = 80;
 char subscribedChannel[] = "chris-servo";
+//char subscribedChannel[] = "cai-servo";
+//char subscribedChannel[] = "aaron-servo";
 char deviceName[] = "chrisServo";
+//char deviceName[] = "caiServo";
+//char deviceName[] = "aaronServo";
 
 Servo myservo; 
 
@@ -37,7 +41,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     convertPayload(payload, length);
     Serial.println(payloadString);
     if(payloadString == "servoOn"){
-      myservo.write(180);
+      myservo.write(0);
       delay(5000);
     } 
   }
@@ -51,7 +55,7 @@ void connectToBroker(){
   if (client.connect(deviceName)) {
     Serial.println("Connecting");
     //send a test message
-    client.publish(subscribedChannel,"Chris Servo Ready");
+    client.publish(subscribedChannel,"Servo Ready");
     //subscribe to a channel
     client.subscribe(subscribedChannel);
     Serial.println("Connected");
@@ -65,7 +69,7 @@ void connectToBroker(){
 void setup() { 
   Serial.begin(9600);
   Serial.println("Starting...");
-  myservo.attach(2);  // 2 for Uno | 22 for Mega
+  myservo.attach(13);  // 2 for Uno | 22 for Mega
   WiFly.begin();
   if (!WiFly.join("cai", "cai123456")) {
       Serial.println("Association failed.");
@@ -81,7 +85,7 @@ void setup() {
 
 
 void loop() {                               
-  myservo.write(0);
+  myservo.write(180);
   checkBroker();
   delay(1000);
 } 
